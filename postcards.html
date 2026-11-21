@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کارت‌پستال‌های یلدا | DigiPostal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;400;700;900&display=swap" rel="stylesheet">
+<script>
+  (function() {
+    const saved = localStorage.getItem('yalda-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
+<style>
+  :root {
+    --bg: #0b0d17;
+    --bg-deep: #05060c;
+    --glass: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-hover: rgba(255, 255, 255, 0.1);
+    --red: #e63946;
+    --red-glow: rgba(230, 57, 70, 0.4);
+    --gold: #ffd166;
+    --green: #2ecc71;
+    --text: #f1faee;
+    --text-dim: rgba(241, 250, 238, 0.5);
+    --blob-opacity: 0.4;
+    --blob-gold-opacity: 0.15;
+    --shadow-soft: rgba(0, 0, 0, 0.3);
+    --scrollbar-track: #0b0d17;
+  }
+  [data-theme="light"] {
+    --bg: #fdf5ee;
+    --bg-deep: #f5e8db;
+    --glass: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(230, 57, 70, 0.15);
+    --glass-hover: rgba(255, 255, 255, 0.85);
+    --red: #d62839;
+    --red-glow: rgba(214, 40, 57, 0.25);
+    --gold: #c88b1a;
+    --text: #2a1a20;
+    --text-dim: rgba(42, 26, 32, 0.55);
+    --blob-opacity: 0.25;
+    --blob-gold-opacity: 0.18;
+    --shadow-soft: rgba(120, 60, 50, 0.12);
+    --scrollbar-track: #fdf5ee;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden; position: relative;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+  .bg-blobs { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: var(--blob-opacity); animation: blobFloat 20s infinite ease-in-out alternate; transition: opacity 0.5s ease; }
+  .blob-1 { width: 500px; height: 500px; background: var(--red); top: -10%; left: -10%; animation-duration: 18s; }
+  .blob-2 { width: 400px; height: 400px; background: #5e2b97; bottom: -10%; right: -5%; animation-duration: 22s; animation-delay: -5s; }
+  [data-theme="light"] .blob-2 { background: #ffb3c1; }
+  .blob-3 { width: 300px; height: 300px; background: var(--gold); top: 40%; left: 60%; opacity: var(--blob-gold-opacity); animation-duration: 25s; animation-delay: -10s; }
+  @keyframes blobFloat { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(60px, 40px) scale(1.15); } }
+
+  .theme-toggle {
+    position: fixed; top: 24px; left: 24px; width: 52px; height: 52px;
+    border-radius: 50%; background: var(--glass); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    z-index: 100; padding: 0; overflow: hidden;
+  }
+  .theme-toggle:hover { border-color: var(--gold); transform: translateY(-3px) rotate(15deg); box-shadow: 0 12px 40px var(--red-glow), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+  .theme-toggle:active { transform: translateY(0) scale(0.95); }
+  .theme-toggle svg { width: 24px; height: 24px; position: absolute; transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+  .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  [data-theme="light"] .icon-sun { opacity: 0; transform: rotate(90deg) scale(0.5); }
+  [data-theme="light"] .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+
+  .container { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+  .page-header { padding: 50px 0 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 22px; background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 50px; color: var(--text); text-decoration: none;
+    font-size: 0.9rem; font-weight: 400;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s;
+  }
+  .back-btn:hover { background: var(--glass-hover); border-color: var(--gold); transform: translateX(4px); color: var(--gold); }
+  .back-btn svg { width: 18px; height: 18px; transition: transform 0.3s; }
+  .back-btn:hover svg { transform: translateX(-3px); }
+
+  .page-title-wrap { text-align: left; display: flex; align-items: center; gap: 16px; }
+  .page-title-logo { width: 56px; height: 56px; border-radius: 14px; background: #ffffff; padding: 8px; box-shadow: 0 4px 20px var(--shadow-soft); flex-shrink: 0; }
+  .page-title-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .page-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 900; line-height: 1.2;
+    background: linear-gradient(135deg, var(--text) 30%, var(--gold) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .page-subtitle { font-size: 0.85rem; color: var(--text-dim); font-weight: 200; margin-top: 4px; letter-spacing: 1px; }
+
+  .gallery-info {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px; margin: 20px 0 30px;
+    padding: 16px 24px; background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 16px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  }
+  .gallery-info .count { font-size: 0.85rem; color: var(--text-dim); font-weight: 200; }
+  .gallery-info .count strong { color: var(--gold); font-weight: 700; font-size: 1rem; }
+  .gallery-info .info-logo { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-dim); }
+  .gallery-info .info-logo strong { color: var(--gold); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+    padding-bottom: 60px;
+  }
+
+  .gallery-card {
+    position: relative; aspect-ratio: 16 / 10; border-radius: 20px; overflow: hidden;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 20px var(--shadow-soft); text-decoration: none; color: #fff;
+    opacity: 0; transform: translateY(20px); animation: cardIn 0.6s ease-out forwards;
+    display: block;
+  }
+  @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+  .gallery-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(255, 209, 102, 0.6);
+    box-shadow: 0 16px 40px rgba(230, 57, 70, 0.25), 0 0 0 1px rgba(255, 209, 102, 0.3);
+    z-index: 5;
+  }
+  .gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
+  .gallery-card:hover img { transform: scale(1.08); }
+  .gallery-card .fallback {
+    position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+    font-size: 3rem; background: linear-gradient(135deg, #2a1a3a, #1a1025);
+  }
+  .gallery-card.broken img { display: none; }
+  .gallery-card.broken .fallback { display: flex; }
+
+  .save-btn {
+    position: absolute; top: 10px; left: 10px; width: 38px; height: 38px;
+    border-radius: 50%; background: rgba(20, 20, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s; z-index: 6; padding: 0;
+  }
+  .save-btn:hover { background: var(--red); border-color: var(--red); transform: scale(1.12); box-shadow: 0 4px 16px var(--red-glow); }
+  .save-btn svg { width: 18px; height: 18px; transition: all 0.3s; }
+  .save-btn.saving svg { animation: spin 0.8s linear infinite; }
+  .save-btn.saved { background: var(--green); border-color: var(--green); }
+  .save-btn.saved svg { display: none; }
+  .save-btn.saved::after { content: '✓'; font-size: 1.1rem; font-weight: 700; color: #fff; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);
+    opacity: 0; transition: opacity 0.4s;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 16px; pointer-events: none; z-index: 2;
+  }
+  .gallery-card:hover .card-overlay { opacity: 1; }
+  .card-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+  .card-hint { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; color: rgba(255,255,255,0.8); }
+  .card-hint svg { width: 12px; height: 12px; }
+
+  .countdown-banner {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; justify-content: center;
+    gap: clamp(16px, 4vw, 40px); flex-wrap: wrap;
+    padding: clamp(18px, 3vw, 28px) clamp(20px, 4vw, 36px);
+    background: linear-gradient(135deg, rgba(230, 57, 70, 0.12), rgba(255, 209, 102, 0.08));
+    border: 1px solid rgba(255, 209, 102, 0.25); border-radius: 20px;
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative; overflow: hidden;
+  }
+  .countdown-banner::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--red), var(--gold), transparent);
+    opacity: 0.6;
+  }
+  .cd-inline-label {
+    font-size: clamp(0.75rem, 1.8vw, 0.9rem); font-weight: 700; color: var(--gold);
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 8px 16px; background: rgba(255, 209, 102, 0.1);
+    border: 1px solid rgba(255, 209, 102, 0.25); border-radius: 50px; white-space: nowrap;
+  }
+  .cd-inline { display: flex; gap: clamp(10px, 2.5vw, 24px); flex-wrap: wrap; justify-content: center; }
+  .cd-inline > span { display: flex; align-items: baseline; gap: 6px; font-size: clamp(0.75rem, 1.6vw, 0.85rem); color: var(--text-dim); font-weight: 200; }
+  .cd-inline strong {
+    font-size: clamp(1.2rem, 3vw, 1.8rem); font-weight: 900; color: var(--text);
+    font-variant-numeric: tabular-nums; text-shadow: 0 0 20px var(--red-glow);
+    min-width: 1.2em; text-align: center;
+  }
+
+  .toast {
+    position: fixed; bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(20, 20, 30, 0.95); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    color: var(--text); padding: 14px 28px; border-radius: 50px;
+    font-size: 0.9rem; font-weight: 700;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 2000;
+    opacity: 0; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    pointer-events: none; display: flex; align-items: center; gap: 10px;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .toast.success { border-color: rgba(46, 204, 113, 0.5); }
+  .toast.error { border-color: rgba(230, 57, 70, 0.5); }
+
+  footer {
+    position: relative; z-index: 10; text-align: center;
+    padding: 30px 20px 50px; color: var(--text-dim);
+    font-size: 0.8rem; font-weight: 200; letter-spacing: 1px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05); opacity: 0.6;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  @media (max-width: 640px) {
+    .gallery-grid { grid-template-columns: 1fr; gap: 14px; }
+    .gallery-card { border-radius: 16px; }
+    .page-header { padding: 30px 0 20px; }
+    .gallery-info { padding: 12px 16px; }
+    .save-btn { width: 34px; height: 34px; top: 8px; left: 8px; }
+    .save-btn svg { width: 16px; height: 16px; }
+    .page-title-logo { width: 44px; height: 44px; }
+    .theme-toggle { width: 44px; height: 44px; top: 16px; left: 16px; }
+    .theme-toggle svg { width: 20px; height: 20px; }
+    .cd-inline > span { font-size: 0.7rem; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" aria-label="تغییر تم">
+  <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</button>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="container">
+  <div class="page-header">
+    <a href="index.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      <span>بازگشت</span>
+    </a>
+    <div class="page-title-wrap">
+      <div class="page-title-logo">
+        <img src="https://digipostal.ir/resources/images/logo-v3.svg" alt="دیجی‌پستال" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:1.5rem;color:#d62839;font-weight:900\'>د</span>';">
+      </div>
+      <div>
+        <h1 class="page-title">کارت‌پستال‌های یلدا</h1>
+        <p class="page-subtitle">مجموعه کارت‌های تبریک شب یلدا</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-info">
+    <div class="count"><strong id="cardCount">۰</strong> کارت‌پستال در مجموعه</div>
+    <div class="info-logo">
+      <span>قدرت گرفته از</span>
+      <strong>DigiPostal.ir</strong>
+    </div>
+  </div>
+
+  <div class="gallery-grid" id="gallery"></div>
+</div>
+
+<footer>ساخته شده با ❤️ برای شب‌های بلند</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+  const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  function toPersianNum(num) { return String(num).split('').map(d => faDigits[+d] || d).join(''); }
+
+  // theme
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  themeToggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('yalda-theme', next);
+  });
+
+  // لیست همه کارت‌پستال‌ها
+  const postcards = [
+    { slug: 'yalda-night', title: 'تبریک شب یلدا خلاقانه' },
+    { slug: 'yldagrop', title: 'تبریک یلدا برای گروه' },
+    { slug: 'jameton', title: 'کارت یلدا مبارک' },
+    { slug: 'peste', title: 'کارت پسته یلدا' },
+    { slug: 'yldanight', title: 'کارت شب یلدا' },
+    { slug: 'night-yalda1404', title: 'یلدای ۱۴۰۴' },
+    { slug: 'txt-yaldanight', title: 'متن یلدا' },
+    { slug: 'yalda-photo-frame', title: 'قاب عکس یلدا' },
+    { slug: 'fun-yalda', title: 'یلدای طنز' },
+    { slug: 'yalda-for-love', title: 'یلدا برای عشق' },
+    { slug: 'watermelon-yalda', title: 'هندونه یلدا' },
+    { slug: 'mybro-yalda', title: 'یلدا برای برادر' },
+    { slug: 'yalda-nice', title: 'یلدای قشنگ' },
+    { slug: 'mysister-yalda', title: 'یلدا برای خواهر' },
+    { slug: 'tabrik-yaldaa', title: 'تبریک یلدا' },
+    { slug: 'yalda-tabrik', title: 'کارت تبریک یلدا' },
+    { slug: 'lovely-yalda-card', title: 'کارت یلدای دوست‌داشتنی' },
+    { slug: 'poem-yalda-card', title: 'کارت شعر یلدا' },
+    { slug: 'pedar-shohar-yalda', title: 'یلدا برای پدرشوهر' },
+    { slug: 'madar-shohar-yalda', title: 'یلدا برای مادرشوهر' },
+    { slug: 'friendly-yaldanight', title: 'یلدای دوستانه' },
+    { slug: 'bride-yalda', title: 'یلدا برای عروس' },
+    { slug: 'yalda-night-invite', title: 'دعوت‌نامه یلدا' },
+    { slug: 'aroos-yalda', title: 'یلدای عروس' },
+    { slug: 'yalda-invite', title: 'دعوت‌نامه یلدا' },
+    { slug: 'yaldanight-card', title: 'کارت شب یلدا' },
+    { slug: 'digital-yaldacard', title: 'کارت دیجیتال یلدا' },
+    { slug: 'pishyalda', title: 'پیش‌یلدا' },
+    { slug: 'happyyalda', title: 'یلدای شاد' },
+    { slug: 'yaldatoon-mobarak', title: 'یلداتون مبارک' },
+    { slug: 'frame-yalda', title: 'قاب یلدا' },
+    { slug: 'yalda-card-invite', title: 'کارت دعوت یلدا' },
+    { slug: 'henmigh', title: 'همینقدر' },
+    { slug: 'kids-yalda', title: 'یلدا برای کودکان' },
+    { slug: 'gold-yalda', title: 'یلدای طلایی' },
+    { slug: 'yalda-vector', title: 'یلدای وکتوری' },
+    { slug: 'yaldastu', title: 'یلداستو' },
+    { slug: 'akh-yalda', title: 'آخ یلدا' },
+    { slug: 'mylove-yalda', title: 'یلدا برای عشق من' },
+    { slug: 'yaldafun', title: 'یلدای فان' },
+    { slug: 'yalda-invitation', title: 'دعوت‌نامه یلدا' },
+    { slug: 'groom-bride-yalda', title: 'یلدا برای عروس و داماد' },
+    { slug: 'yalda', title: 'کارت یلدا' },
+    { slug: 'yalda-aroos', title: 'یلدای عروس' },
+    { slug: 'bride-yalda-invite', title: 'دعوت‌نامه عروس' },
+    { slug: 'aroschele', title: 'عروس چله' },
+    { slug: 'koyalda', title: 'کوی یلدا' },
+    { slug: 'babayalda', title: 'بابای یلدا' },
+    { slug: 'yalda1402', title: 'یلدای ۱۴۰۲' },
+    { slug: 'yaldapn', title: 'یلدا' },
+    { slug: 'avalyalda', title: 'اولین یلدا' },
+    { slug: 'firstyalda', title: 'اولین یلدا' },
+    { slug: 'yldachild', title: 'یلدا برای کودک' },
+    { slug: 'yaldasist', title: 'یلدا برای خواهر' },
+    { slug: 'yldabro', title: 'یلدا برای برادر' },
+    { slug: 'yldamam', title: 'یلدا برای مامان' },
+    { slug: 'yldafa', title: 'یلدا برای بابا' },
+    { slug: 'yldamami', title: 'یلدا برای مامانی' },
+    { slug: 'yaldagrfthr', title: 'یلدا برای پدربزرگ' },
+    { slug: 'ommyalda', title: 'یلدا' },
+    { slug: 'tyaldaq', title: 'یلدا' },
+    { slug: 'khayal', title: 'خیال' },
+    { slug: 'tayalda', title: 'تا یلدا' },
+    { slug: 'happpyyalda', title: 'یلدای شاد' },
+    { slug: 'amsyalda', title: 'امشب یلدا' },
+    { slug: 'zibayalda', title: 'یلدای زیبا' },
+    { slug: 'yaldacc', title: 'یلدا' },
+    { slug: 'yaldaf', title: 'یلدا' },
+    { slug: 'pishy', title: 'پیشی' },
+    { slug: 'yldagirl', title: 'یلدا برای دختر' },
+    { slug: 'yalda-love', title: 'یلدا برای عشق' },
+    { slug: 'shyalda', title: 'یلدا' }
+  ];
+
+  // شمارش معکوس
+  function getYaldaDate() {
+    const now = new Date();
+    let yalda = new Date(now.getFullYear(), 11, 21, 0, 0, 0);
+    if (now > yalda) yalda = new Date(now.getFullYear() + 1, 11, 21, 0, 0, 0);
+    return yalda;
+  }
+  function getRemaining() {
+    const diff = getYaldaDate() - new Date();
+    if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
+    return {
+      days: Math.floor(diff / 86400000),
+      hours: Math.floor((diff % 86400000) / 3600000),
+      mins: Math.floor((diff % 3600000) / 60000),
+      secs: Math.floor((diff % 60000) / 1000)
+    };
+  }
+  function createCountdownBanner() {
+    const banner = document.createElement('div');
+    banner.className = 'countdown-banner';
+    banner.innerHTML = `
+      <div class="cd-inline-label">⏳ تا یلدا</div>
+      <div class="cd-inline">
+        <span><strong class="cd-days">--</strong> روز</span>
+        <span><strong class="cd-hours">--</strong> ساعت</span>
+        <span><strong class="cd-mins">--</strong> دقیقه</span>
+        <span><strong class="cd-secs">--</strong> ثانیه</span>
+      </div>
+    `;
+    return banner;
+  }
+  function updateAllBanners() {
+    const r = getRemaining();
+    document.querySelectorAll('.countdown-banner').forEach(b => {
+      b.querySelector('.cd-days').textContent = toPersianNum(r.days);
+      b.querySelector('.cd-hours').textContent = toPersianNum(String(r.hours).padStart(2, '0'));
+      b.querySelector('.cd-mins').textContent = toPersianNum(String(r.mins).padStart(2, '0'));
+      b.querySelector('.cd-secs').textContent = toPersianNum(String(r.secs).padStart(2, '0'));
+    });
+  }
+
+  // toast
+  let toastTimer;
+  function showToast(msg, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.className = 'toast show ' + type;
+    toast.textContent = msg;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  // دانلود
+  async function downloadImage(url, filename, btn) {
+    btn.classList.add('saving');
+    btn.disabled = true;
+    try {
+      const res = await fetch(url, { mode: 'cors' });
+      if (!res.ok) throw new Error('fail');
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(blobUrl);
+      btn.classList.remove('saving');
+      btn.classList.add('saved');
+      showToast('✓ کارت‌پستال ذخیره شد');
+    } catch (e) {
+      btn.classList.remove('saving');
+      btn.disabled = false;
+      showToast('برای ذخیره، تصویر را در تب جدید ذخیره کن', 'error');
+      window.open(url, '_blank');
+    }
+    setTimeout(() => { btn.classList.remove('saved'); btn.disabled = false; }, 3000);
+  }
+
+  // رندر
+  const gallery = document.getElementById('gallery');
+
+  function render() {
+    gallery.innerHTML = '';
+    document.getElementById('cardCount').textContent = toPersianNum(postcards.length);
+
+    postcards.forEach((card, index) => {
+      const cardEl = document.createElement('a');
+      cardEl.className = 'gallery-card';
+      cardEl.href = `https://DigiPostal.ir/${card.slug}`;
+      cardEl.target = '_blank';
+      cardEl.rel = 'noopener noreferrer';
+      cardEl.style.animationDelay = (index * 0.015) + 's';
+
+      const img = document.createElement('img');
+      img.onerror = () => cardEl.classList.add('broken');
+      img.src = `https://dl.digipostal.ir/data/files/card_info/2x/${card.slug}.jpg`;
+      img.alt = card.title;
+      img.loading = 'lazy';
+
+      const fallback = document.createElement('div');
+      fallback.className = 'fallback';
+      fallback.textContent = '🎴';
+
+      const saveBtn = document.createElement('button');
+      saveBtn.className = 'save-btn';
+      saveBtn.title = 'ذخیره کارت‌پستال';
+      saveBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+      saveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        downloadImage(img.src, `${card.slug}.jpg`, saveBtn);
+      });
+
+      const overlay = document.createElement('div');
+      overlay.className = 'card-overlay';
+      overlay.innerHTML = `
+        <div class="card-title">${card.title}</div>
+        <div class="card-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          مشاهده در DigiPostal
+        </div>
+      `;
+
+      cardEl.appendChild(img);
+      cardEl.appendChild(fallback);
+      cardEl.appendChild(saveBtn);
+      cardEl.appendChild(overlay);
+      gallery.appendChild(cardEl);
+
+      // ✨ هر ۲ کارت‌پستال → بنر شمارش معکوس
+      if ((index + 1) % 2 === 0 && index + 1 < postcards.length) {
+        gallery.appendChild(createCountdownBanner());
+      }
+    });
+
+    updateAllBanners();
+  }
+
+  render();
+  setInterval(updateAllBanners, 1000);
+</script>
+</body>
+</html>

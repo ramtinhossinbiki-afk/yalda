@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<link rel="icon" type="image/png" href="https://sabinserver.com/wp-content/uploads/2025/05/anar-2.png">
+<link rel="apple-touch-icon" href="https://sabinserver.com/wp-content/uploads/2025/05/anar-2.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>یلدا | شب بلند عاشقی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;400;700;900&display=swap" rel="stylesheet">
+<script>
+  (function() {
+    const saved = localStorage.getItem('yalda-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
+<style>
+  :root {
+    --bg: #0b0d17;
+    --bg-deep: #05060c;
+    --glass: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-hover: rgba(255, 255, 255, 0.1);
+    --red: #e63946;
+    --red-glow: rgba(230, 57, 70, 0.4);
+    --gold: #ffd166;
+    --text: #f1faee;
+    --text-dim: rgba(241, 250, 238, 0.5);
+    --blob-opacity: 0.4;
+    --blob-gold-opacity: 0.15;
+    --hero-drop: rgba(230, 57, 70, 0.4);
+    --shadow-soft: rgba(0, 0, 0, 0.3);
+    --scrollbar-track: #0b0d17;
+  }
+
+  [data-theme="light"] {
+    --bg: #fdf5ee;
+    --bg-deep: #f5e8db;
+    --glass: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(230, 57, 70, 0.15);
+    --glass-hover: rgba(255, 255, 255, 0.85);
+    --red: #d62839;
+    --red-glow: rgba(214, 40, 57, 0.25);
+    --gold: #c88b1a;
+    --text: #2a1a20;
+    --text-dim: rgba(42, 26, 32, 0.55);
+    --blob-opacity: 0.25;
+    --blob-gold-opacity: 0.18;
+    --hero-drop: rgba(214, 40, 57, 0.3);
+    --shadow-soft: rgba(120, 60, 50, 0.12);
+    --scrollbar-track: #fdf5ee;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  .bg-blobs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: var(--blob-opacity);
+    animation: blobFloat 20s infinite ease-in-out alternate;
+    transition: opacity 0.5s ease;
+  }
+  .blob-1 { width: 500px; height: 500px; background: var(--red); top: -10%; left: -10%; animation-duration: 18s; }
+  .blob-2 { width: 400px; height: 400px; background: #5e2b97; bottom: -10%; right: -5%; animation-duration: 22s; animation-delay: -5s; }
+  [data-theme="light"] .blob-2 { background: #ffb3c1; }
+  .blob-3 { width: 300px; height: 300px; background: var(--gold); top: 40%; left: 60%; opacity: var(--blob-gold-opacity); animation-duration: 25s; animation-delay: -10s; }
+
+  @keyframes blobFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(60px, 40px) scale(1.15); }
+  }
+
+  /* ===== دکمه تغییر تم ===== */
+  .theme-toggle {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    z-index: 100;
+    padding: 0;
+    overflow: hidden;
+  }
+  .theme-toggle:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px) rotate(15deg);
+    box-shadow: 0 12px 40px var(--red-glow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .theme-toggle:active { transform: translateY(0) scale(0.95); }
+
+  .theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+  .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  [data-theme="light"] .icon-sun { opacity: 0; transform: rotate(90deg) scale(0.5); }
+  [data-theme="light"] .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===== هدر ===== */
+  header { padding: 80px 0 40px; text-align: center; }
+
+  .anar-hero {
+    width: clamp(80px, 15vw, 140px);
+    height: auto;
+    margin-bottom: 24px;
+    filter: drop-shadow(0 0 40px var(--hero-drop));
+    animation: float 6s infinite ease-in-out;
+    display: inline-block;
+    transition: filter 0.5s ease;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--text) 30%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background 0.5s ease;
+  }
+
+  .sub {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--text-dim);
+    font-weight: 200;
+    letter-spacing: 1px;
+  }
+
+  /* ===== شمارش معکوس ===== */
+  .countdown-wrap { margin: 50px 0 60px; }
+
+  .countdown-label {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    font-weight: 200;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: clamp(8px, 2vw, 16px);
+    flex-wrap: wrap;
+  }
+
+  .cd-box {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: clamp(16px, 3vw, 28px) clamp(14px, 3vw, 32px);
+    min-width: clamp(70px, 15vw, 100px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  .cd-box:hover {
+    background: var(--glass-hover);
+    border-color: rgba(230, 57, 70, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px var(--red-glow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .cd-num {
+    display: block;
+    font-size: clamp(1.8rem, 4.5vw, 3rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 30px var(--red-glow);
+  }
+
+  .cd-label {
+    display: block;
+    margin-top: 10px;
+    font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+    color: var(--text-dim);
+    font-weight: 200;
+    letter-spacing: 1px;
+  }
+
+  /* ===== گالری دایره‌ای ===== */
+  .gallery-section { margin: 60px 0; text-align: center; }
+
+  .section-heading {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .section-heading span { color: var(--red); }
+
+  .section-sub {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-weight: 200;
+    margin-bottom: 28px;
+  }
+
+  .circle-gallery {
+    display: flex;
+    justify-content: center;
+    gap: clamp(12px, 3vw, 24px);
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .circle-item {
+    position: relative;
+    width: clamp(70px, 16vw, 110px);
+    height: clamp(70px, 16vw, 110px);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--glass-border);
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    box-shadow: 0 4px 20px var(--shadow-soft);
+    display: block;
+  }
+  .circle-item:hover {
+    transform: scale(1.1) translateY(-6px);
+    border-color: var(--gold);
+    box-shadow: 0 12px 40px var(--red-glow);
+    z-index: 5;
+  }
+
+  .circle-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s;
+  }
+  .circle-item:hover img { transform: scale(1.15); }
+
+  .circle-item .fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, var(--bg-deep), var(--bg));
+  }
+  .circle-item.broken img { display: none; }
+  .circle-item.broken .fallback { display: flex; }
+
+  .view-gallery-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-weight: 700;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .view-gallery-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--red), #a02a3a);
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 0;
+  }
+  .view-gallery-btn > * { position: relative; z-index: 1; }
+  .view-gallery-btn:hover {
+    border-color: var(--red);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px var(--red-glow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+  .view-gallery-btn:hover::before { opacity: 1; }
+
+  .view-gallery-btn svg { width: 20px; height: 20px; transition: transform 0.3s; }
+  .view-gallery-btn:hover svg { transform: translateX(-4px); }
+
+  .view-gallery-btn .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(255, 209, 102, 0.15);
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    border-radius: 50px;
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .view-gallery-btn:hover .badge {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #fff;
+  }
+
+  /* ============================================================
+     ===== بخش کارت‌پستال =====
+     ============================================================ */
+  .postcard-section {
+    margin: 80px 0 60px;
+    text-align: center;
+  }
+
+  .postcard-eyebrow {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255, 209, 102, 0.12);
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    border-radius: 50px;
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+
+  .postcard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(14px, 3vw, 24px);
+    max-width: 820px;
+    margin: 32px auto;
+  }
+
+  .postcard {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px var(--shadow-soft);
+    isolation: isolate;
+  }
+
+  .postcard::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+    z-index: 1;
+    transition: opacity 0.4s;
+  }
+
+  .postcard:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--gold);
+    box-shadow: 0 20px 60px var(--red-glow), 0 0 0 1px rgba(255, 209, 102, 0.3);
+    z-index: 3;
+  }
+
+  .postcard img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .postcard:hover img { transform: scale(1.1); }
+
+  .postcard-info {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 20px;
+    z-index: 2;
+    text-align: right;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .postcard-info-text { flex: 1; }
+
+  .postcard-title {
+    font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .postcard-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 400;
+  }
+  .postcard-hint svg { width: 12px; height: 12px; }
+
+  .postcard-arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .postcard-arrow svg {
+    width: 16px;
+    height: 16px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.4s;
+  }
+  .postcard:hover .postcard-arrow {
+    background: var(--red);
+    border-color: var(--red);
+    transform: scale(1.1);
+  }
+  .postcard:hover .postcard-arrow svg { transform: translate(-2px, 2px); }
+
+  .postcard-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    background: linear-gradient(135deg, #2a1a3a, #1a1025);
+    z-index: 0;
+  }
+  .postcard.broken img { display: none; }
+  .postcard.broken .postcard-fallback { display: flex; }
+
+  /* ===== دکمه همه کارت‌پستال‌ها (با لوگو) ===== */
+  .all-postcards-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 24px 10px 14px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+    font-weight: 700;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    margin-top: 8px;
+  }
+  .all-postcards-btn:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px var(--red-glow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .dp-logo-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .all-postcards-btn:hover .dp-logo-wrap { transform: rotate(-8deg) scale(1.05); }
+
+  .dp-logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .all-postcards-btn .btn-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: right;
+    line-height: 1.3;
+  }
+  .all-postcards-btn .btn-text small {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .all-postcards-btn .ext-arrow {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-dim);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.3s;
+    margin-right: 4px;
+  }
+  .all-postcards-btn:hover .ext-arrow {
+    stroke: var(--gold);
+    transform: translate(-3px, -3px);
+  }
+
+  /* ===== بخش پیام ===== */
+  .message-section { margin: 60px 0 40px; text-align: center; }
+
+  .glass-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: clamp(28px, 5vw, 48px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .glass-card p {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    line-height: 2.2;
+    color: var(--text-dim);
+    font-weight: 200;
+  }
+  .glass-card p strong { color: var(--gold); font-weight: 700; }
+
+  footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 40px 20px 50px;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+    opacity: 0.6;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  @media (max-width: 600px) {
+    .postcard-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    header { padding: 60px 0 20px; }
+    .countdown { gap: 6px; }
+    .cd-box { padding: 14px 10px; border-radius: 16px; min-width: 64px; }
+    .circle-item { width: 60px; height: 60px; }
+    .view-gallery-btn { padding: 14px 26px; font-size: 0.85rem; }
+    .theme-toggle { width: 44px; height: 44px; top: 16px; left: 16px; }
+    .theme-toggle svg { width: 20px; height: 20px; }
+    .dp-logo-wrap { width: 36px; height: 36px; }
+    .all-postcards-btn { padding: 8px 18px 8px 10px; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" id="themeToggle" aria-label="تغییر تم" title="تغییر تم روشن/تیره">
+  <svg class="icon-sun" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="container">
+
+  <header>
+    <img 
+      src="https://uploadkon.ir/uploads/e2e021_26Untitled-removebg-preview.png" 
+      alt="انار یلدا" 
+      class="anar-hero"
+      onerror="this.outerHTML='<div class=\'anar-hero\' style=\'font-size:4rem;line-height:1;\'>🍉</div>'"
+    >
+    <h1>شب یلدا</h1>
+    <p class="sub">بلندترین شب سال، گرم‌ترین لحظه‌ها</p>
+  </header>
+
+  <section class="countdown-wrap">
+    <p class="countdown-label">تا آغاز یلدا</p>
+    <div class="countdown">
+      <div class="cd-box">
+        <span class="cd-num" id="days">--</span>
+        <span class="cd-label">روز</span>
+      </div>
+      <div class="cd-box">
+        <span class="cd-num" id="hours">--</span>
+        <span class="cd-label">ساعت</span>
+      </div>
+      <div class="cd-box">
+        <span class="cd-num" id="minutes">--</span>
+        <span class="cd-label">دقیقه</span>
+      </div>
+      <div class="cd-box">
+        <span class="cd-num" id="seconds">--</span>
+        <span class="cd-label">ثانیه</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-section">
+    <h2 class="section-heading">یلدای <span>رنگی</span></h2>
+    <p class="section-sub">یه یادگاری از شب‌های بلند</p>
+    <div class="circle-gallery" id="gallery"></div>
+
+    <a href="gallery.html" class="view-gallery-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+        <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+      </svg>
+      <span>مشاهده مجموعه عکس‌ها</span>
+      <span class="badge">۸۶</span>
+    </a>
+  </section>
+
+  <!-- ===== بخش کارت‌پستال ===== -->
+  <section class="postcard-section">
+    <span class="postcard-eyebrow">🎴 کارت‌پستال</span>
+    <h2 class="section-heading">تبریک <span>یلدا</span> با کارت‌پستال</h2>
+    <p class="section-sub">یه کارت دیجیتال برای اونی که دوستش داری! </p>
+
+    <div class="postcard-grid">
+      <a href="https://DigiPostal.ir/yalda-night" target="_blank" rel="noopener noreferrer" class="postcard">
+        <img 
+          src="https://dl.digipostal.ir/data/files/card_info/2x/yalda-night.jpg" 
+          alt="تبریک شب یلدا خلاقانه" 
+          loading="lazy"
+          onerror="this.parentElement.classList.add('broken')"
+        >
+        <div class="postcard-fallback">🎴</div>
+        <div class="postcard-info">
+          <div class="postcard-info-text">
+            <div class="postcard-title">تبریک شب یلدا خلاقانه</div>
+            <span class="postcard-hint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              مشاهده کارت
+            </span>
+          </div>
+          <div class="postcard-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="5" y1="19" x2="19" y2="5"></line>
+              <polyline points="9 5 19 5 19 15"></polyline>
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://DigiPostal.ir/yldagrop" target="_blank" rel="noopener noreferrer" class="postcard">
+        <img 
+          src="https://dl.digipostal.ir/data/files/card_info/2x/yldagrop.jpg" 
+          alt="تبریک یلدا برای گروه" 
+          loading="lazy"
+          onerror="this.parentElement.classList.add('broken')"
+        >
+        <div class="postcard-fallback">🎴</div>
+        <div class="postcard-info">
+          <div class="postcard-info-text">
+            <div class="postcard-title">تبریک یلدا برای گروه</div>
+            <span class="postcard-hint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              مشاهده کارت
+            </span>
+          </div>
+          <div class="postcard-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="5" y1="19" x2="19" y2="5"></line>
+              <polyline points="9 5 19 5 19 15"></polyline>
+            </svg>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- دکمه همه کارت‌پستال‌ها → postcards.html -->
+    <a href="postcards.html" class="all-postcards-btn">
+      <div class="dp-logo-wrap">
+        <img 
+          src="https://digipostal.ir/resources/images/logo-v3.svg" 
+          alt="دیجی‌پستال"
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:1.2rem;color:#d62839;font-weight:900\'>د</span>';"
+        >
+      </div>
+      <div class="btn-text">
+        <span>همه کارت‌پستال‌ها</span>
+        <small>DigiPostal.ir</small>
+      </div>
+      <svg class="ext-arrow" viewBox="0 0 24 24">
+        <line x1="5" y1="19" x2="19" y2="5"></line>
+        <polyline points="9 5 19 5 19 15"></polyline>
+      </svg>
+    </a>
+  </section>
+
+  <section class="message-section">
+    <div class="glass-card">
+      <p>
+        شب یلدا فقط بلندترین شب سال نیست؛<br>
+        بهانه‌ای‌ست برای <strong>دور هم بودن</strong>،<br>
+        خندیدن و گرم شدن در کنار هم.<br><br>
+        <strong>یلداتون مبارک 🌙</strong>
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+    ساخته شده با ❤️ توسط رامتین حسین بیکی برای شب های بلند 
+</footer>
+
+<script>
+  // ========== تغییر تم ==========
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  themeToggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('yalda-theme', next);
+  });
+
+  // ========== شمارش معکوس ==========
+  function getYaldaDate() {
+    const now = new Date();
+    let yalda = new Date(now.getFullYear(), 11, 21, 0, 0, 0);
+    if (now > yalda) yalda = new Date(now.getFullYear() + 1, 11, 21, 0, 0, 0);
+    return yalda;
+  }
+
+  function updateCountdown() {
+    const diff = getYaldaDate() - new Date();
+    if (diff <= 0) {
+      ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).textContent = '0');
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById('days').textContent = days;
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ========== گالری دایره‌ای ==========
+  const allNumbers = [];
+  for (let i = 9; i <= 94; i++) allNumbers.push(i);
+  const shuffled = allNumbers.sort(() => Math.random() - 0.5);
+  const selected = shuffled.slice(0, 7);
+  const fallbackEmojis = ['🍉', '🍎', '🍇', '🥜', '🍊', '🌙', '✨'];
+  const gallery = document.getElementById('gallery');
+
+  selected.forEach((num, index) => {
+    const link = document.createElement('a');
+    link.className = 'circle-item';
+    link.href = 'gallery.html';
+    link.title = 'رفتن به مجموعه عکس‌ها';
+
+    const img = document.createElement('img');
+    img.src = `https://www.digikala.com/mag/landing/assets/dl/pic-thumb/${num}.jpg`;
+    img.alt = `تصویر یلدا ${num}`;
+    img.loading = 'lazy';
+    img.onerror = () => link.classList.add('broken');
+
+    const fallback = document.createElement('div');
+    fallback.className = 'fallback';
+    fallback.textContent = fallbackEmojis[index % fallbackEmojis.length];
+
+    link.appendChild(img);
+    link.appendChild(fallback);
+    gallery.appendChild(link);
+  });
+</script>
+
+</body>
+</html>

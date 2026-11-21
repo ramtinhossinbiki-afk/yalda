@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<link rel="icon" type="image/png" href="https://sabinserver.com/wp-content/uploads/2025/05/anar-2.png">
+<link rel="apple-touch-icon" href="https://sabinserver.com/wp-content/uploads/2025/05/anar-2.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گالری یلدا | قاب‌های شب بلند</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d17;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-hover: rgba(255, 255, 255, 0.09);
+    --red: #e63946;
+    --red-glow: rgba(230, 57, 70, 0.4);
+    --gold: #ffd166;
+    --green: #2ecc71;
+    --text: #f1faee;
+    --text-dim: rgba(241, 250, 238, 0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ===== پس‌زمینه ===== */
+  .bg-blobs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.35;
+    animation: blobFloat 20s infinite ease-in-out alternate;
+  }
+  .blob-1 { width: 500px; height: 500px; background: var(--red); top: -10%; left: -10%; animation-duration: 18s; }
+  .blob-2 { width: 450px; height: 450px; background: #5e2b97; bottom: -10%; right: -8%; animation-duration: 22s; animation-delay: -5s; }
+  .blob-3 { width: 350px; height: 350px; background: var(--gold); top: 50%; left: 50%; opacity: 0.12; animation-duration: 25s; animation-delay: -10s; }
+
+  @keyframes blobFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(60px, 40px) scale(1.15); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===== هدر ===== */
+  .page-header {
+    padding: 50px 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s;
+  }
+  .back-btn:hover {
+    background: var(--glass-hover);
+    border-color: var(--gold);
+    transform: translateX(4px);
+    color: var(--gold);
+  }
+  .back-btn svg { width: 18px; height: 18px; transition: transform 0.3s; }
+  .back-btn:hover svg { transform: translateX(-3px); }
+
+  .page-title-wrap { text-align: left; }
+  .page-title {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text) 30%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .page-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-weight: 200;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== اطلاعات ===== */
+  .gallery-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 20px 0 30px;
+    padding: 16px 24px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .gallery-info .count {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-weight: 200;
+  }
+  .gallery-info .count strong {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .filter-btns {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 18px;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .filter-btn:hover {
+    color: var(--text);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  .filter-btn.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+    box-shadow: 0 4px 20px var(--red-glow);
+  }
+
+  /* ===== گرید گالری ===== */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 18px;
+    padding-bottom: 60px;
+  }
+
+  .gallery-card {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cardIn 0.6s ease-out forwards;
+  }
+
+  @keyframes cardIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .gallery-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(255, 209, 102, 0.6);
+    box-shadow: 0 16px 40px rgba(230, 57, 70, 0.25), 0 0 0 1px rgba(255, 209, 102, 0.3);
+    z-index: 5;
+  }
+
+  .gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .gallery-card:hover img { transform: scale(1.08); }
+
+  .gallery-card .fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #2a1a3a, #1a1025);
+  }
+  .gallery-card.broken img { display: none; }
+  .gallery-card.broken .fallback { display: flex; }
+
+  /* ===== دکمه ذخیره ===== */
+  .save-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(20, 20, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 6;
+    padding: 0;
+  }
+  .save-btn:hover {
+    background: var(--red);
+    border-color: var(--red);
+    transform: scale(1.12);
+    box-shadow: 0 4px 16px var(--red-glow);
+  }
+  .save-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: all 0.3s;
+  }
+  .save-btn.saving svg { animation: spin 0.8s linear infinite; }
+  .save-btn.saved {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .save-btn.saved svg { display: none; }
+  .save-btn.saved::after {
+    content: '✓';
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ===== اورلی ===== */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    pointer-events: none;
+  }
+  .gallery-card:hover .card-overlay { opacity: 1; }
+
+  .card-number {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .card-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* ===== بنر شمارش معکوس (هر ۹ عکس) ===== */
+  .countdown-banner {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(16px, 4vw, 40px);
+    flex-wrap: wrap;
+    padding: clamp(18px, 3vw, 28px) clamp(20px, 4vw, 36px);
+    background: linear-gradient(135deg, rgba(230, 57, 70, 0.12), rgba(255, 209, 102, 0.08));
+    border: 1px solid rgba(255, 209, 102, 0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .countdown-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--red), var(--gold), transparent);
+    opacity: 0.6;
+  }
+
+  .cd-inline-label {
+    font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    background: rgba(255, 209, 102, 0.1);
+    border: 1px solid rgba(255, 209, 102, 0.25);
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  .cd-inline {
+    display: flex;
+    gap: clamp(10px, 2.5vw, 24px);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cd-inline > span {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: clamp(0.75rem, 1.6vw, 0.85rem);
+    color: var(--text-dim);
+    font-weight: 200;
+  }
+
+  .cd-inline strong {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 900;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 20px var(--red-glow);
+    min-width: 1.2em;
+    text-align: center;
+  }
+
+  /* ===== لایت‌باکس ===== */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 15, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .lightbox.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .lightbox-inner {
+    position: relative;
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+    animation: lbIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  @keyframes lbIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .lightbox-inner img {
+    display: block;
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+  }
+
+  .lb-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 1001;
+  }
+  .lb-close:hover {
+    background: var(--red);
+    border-color: var(--red);
+    transform: rotate(90deg);
+  }
+
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 1001;
+  }
+  .lb-nav:hover {
+    background: var(--red);
+    border-color: var(--red);
+    transform: translateY(-50%) scale(1.1);
+  }
+  .lb-prev { right: 20px; }
+  .lb-next { left: 20px; }
+
+  /* ===== توست ===== */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(20, 20, 30, 0.95);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  .toast.success { border-color: rgba(46, 204, 113, 0.5); }
+  .toast.error { border-color: rgba(230, 57, 70, 0.5); }
+
+  /* ===== فوتر ===== */
+  footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 30px 20px 50px;
+    color: rgba(241, 250, 238, 0.2);
+    font-size: 0.8rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  /* ===== ریسپانسیو ===== */
+  @media (max-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .gallery-card { border-radius: 16px; }
+    .page-header { padding: 30px 0 20px; }
+    .gallery-info { padding: 12px 16px; }
+    .lb-nav { width: 40px; height: 40px; font-size: 1.2rem; }
+    .lb-prev { right: 10px; }
+    .lb-next { left: 10px; }
+    .save-btn { width: 34px; height: 34px; top: 8px; left: 8px; }
+    .save-btn svg { width: 16px; height: 16px; }
+    .cd-inline > span { font-size: 0.7rem; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="container">
+
+  <div class="page-header">
+    <a href="index.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+      <span>بازگشت</span>
+    </a>
+    <div class="page-title-wrap">
+      <h1 class="page-title">قاب‌های یلدا</h1>
+      <p class="page-subtitle">گالری تصاویر شب بلند</p>
+    </div>
+  </div>
+
+  <div class="gallery-info">
+    <div class="count">
+      <strong id="imgCount">۰</strong> تصویر در گالری
+    </div>
+    <div class="filter-btns">
+      <button class="filter-btn active" data-filter="all">همه</button>
+      <button class="filter-btn" data-filter="9-30">۹ تا ۳۰</button>
+      <button class="filter-btn" data-filter="31-60">۳۱ تا ۶۰</button>
+      <button class="filter-btn" data-filter="61-94">۶۱ تا ۹۴</button>
+    </div>
+  </div>
+
+  <div class="gallery-grid" id="gallery"></div>
+
+</div>
+
+<footer>
+  ساخته شده با ❤️ برای شب‌های بلند
+</footer>
+
+<!-- لایت‌باکس -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev">›</button>
+  <button class="lb-nav lb-next" id="lbNext">‹</button>
+  <div class="lightbox-inner">
+    <img id="lbImage" src="" alt="تصویر بزرگ">
+  </div>
+</div>
+
+<!-- توست -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ========== ابزار ==========
+  const faDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  function toPersianNum(num) {
+    return String(num).split('').map(d => faDigits[+d] || d).join('');
+  }
+
+  // ========== لیست تصاویر ۹ تا ۹۴ ==========
+  const fallbackEmojis = ['🍉', '🍎', '🍇', '🥜', '🍊', '🌙', '✨', '🕯️', '🫖'];
+  const allImages = [];
+  for (let i = 9; i <= 94; i++) {
+    allImages.push({
+      num: i,
+      url: `https://www.digikala.com/mag/landing/assets/dl/pic-thumb/${i}.jpg`
+    });
+  }
+
+  // ========== شمارش معکوس ==========
+  function getYaldaDate() {
+    const now = new Date();
+    let yalda = new Date(now.getFullYear(), 11, 21, 0, 0, 0);
+    if (now > yalda) yalda = new Date(now.getFullYear() + 1, 11, 21, 0, 0, 0);
+    return yalda;
+  }
+
+  function getRemaining() {
+    const diff = getYaldaDate() - new Date();
+    if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
+    return {
+      days: Math.floor(diff / 86400000),
+      hours: Math.floor((diff % 86400000) / 3600000),
+      mins: Math.floor((diff % 3600000) / 60000),
+      secs: Math.floor((diff % 60000) / 1000)
+    };
+  }
+
+  function createCountdownBanner() {
+    const banner = document.createElement('div');
+    banner.className = 'countdown-banner';
+    banner.innerHTML = `
+      <div class="cd-inline-label">⏳ تا یلدا</div>
+      <div class="cd-inline">
+        <span><strong class="cd-days">--</strong> روز</span>
+        <span><strong class="cd-hours">--</strong> ساعت</span>
+        <span><strong class="cd-mins">--</strong> دقیقه</span>
+        <span><strong class="cd-secs">--</strong> ثانیه</span>
+      </div>
+    `;
+    return banner;
+  }
+
+  function updateAllBanners() {
+    const r = getRemaining();
+    document.querySelectorAll('.countdown-banner').forEach(b => {
+      b.querySelector('.cd-days').textContent = toPersianNum(r.days);
+      b.querySelector('.cd-hours').textContent = toPersianNum(String(r.hours).padStart(2, '0'));
+      b.querySelector('.cd-mins').textContent = toPersianNum(String(r.mins).padStart(2, '0'));
+      b.querySelector('.cd-secs').textContent = toPersianNum(String(r.secs).padStart(2, '0'));
+    });
+  }
+
+  // ========== توست ==========
+  let toastTimer;
+  function showToast(msg, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.className = 'toast show ' + type;
+    toast.textContent = msg;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  // ========== دانلود تصویر ==========
+  async function downloadImage(url, filename, btn) {
+    btn.classList.add('saving');
+    btn.disabled = true;
+
+    try {
+      // تلاش با fetch (اگه CORS اجازه بده)
+      const res = await fetch(url, { mode: 'cors' });
+      if (!res.ok) throw new Error('fail');
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+
+      btn.classList.remove('saving');
+      btn.classList.add('saved');
+      showToast('✓ تصویر ذخیره شد');
+    } catch (e) {
+      // فالبک: باز کردن در تب جدید
+      btn.classList.remove('saving');
+      btn.disabled = false;
+      showToast('برای ذخیره، تصویر را در تب جدید ذخیره کن', 'error');
+      window.open(url, '_blank');
+    }
+
+    setTimeout(() => {
+      btn.classList.remove('saved');
+      btn.disabled = false;
+    }, 3000);
+  }
+
+  // ========== رندر گالری ==========
+  const gallery = document.getElementById('gallery');
+  let visibleImages = [...allImages];
+
+  function renderGallery(images) {
+    gallery.innerHTML = '';
+    document.getElementById('imgCount').textContent = toPersianNum(images.length);
+
+    images.forEach((img, index) => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+      card.style.animationDelay = (index * 0.02) + 's';
+
+      const imageEl = document.createElement('img');
+      imageEl.src = img.url;
+      imageEl.alt = `تصویر یلدا شماره ${img.num}`;
+      imageEl.loading = 'lazy';
+      imageEl.onerror = () => card.classList.add('broken');
+
+      const fallback = document.createElement('div');
+      fallback.className = 'fallback';
+      fallback.textContent = fallbackEmojis[img.num % fallbackEmojis.length];
+
+      // دکمه ذخیره
+      const saveBtn = document.createElement('button');
+      saveBtn.className = 'save-btn';
+      saveBtn.title = 'ذخیره تصویر';
+      saveBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+      `;
+      saveBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        downloadImage(img.url, `yalda-${img.num}.jpg`, saveBtn);
+      });
+
+      // اورلی
+      const overlay = document.createElement('div');
+      overlay.className = 'card-overlay';
+      overlay.innerHTML = `
+        <span class="card-number">شماره ${toPersianNum(img.num)}</span>
+        <span class="card-title">یلدا</span>
+      `;
+
+      card.appendChild(imageEl);
+      card.appendChild(fallback);
+      card.appendChild(saveBtn);
+      card.appendChild(overlay);
+
+      card.addEventListener('click', () => openLightbox(img.num));
+
+      gallery.appendChild(card);
+
+      // ✨ هر ۹ عکس یک بنر شمارش معکوس
+      if ((index + 1) % 9 === 0 && index + 1 < images.length) {
+        gallery.appendChild(createCountdownBanner());
+      }
+    });
+
+    updateAllBanners();
+  }
+
+  // ========== فیلتر ==========
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let filtered;
+      if (filter === 'all') {
+        filtered = [...allImages];
+      } else {
+        const [min, max] = filter.split('-').map(Number);
+        filtered = allImages.filter(img => img.num >= min && img.num <= max);
+      }
+      visibleImages = filtered;
+      renderGallery(filtered);
+    });
+  });
+
+  // ========== لایت‌باکس ==========
+  const lightbox = document.getElementById('lightbox');
+  const lbImage = document.getElementById('lbImage');
+  let currentIndex = 0;
+
+  function openLightbox(num) {
+    currentIndex = visibleImages.findIndex(img => img.num === num);
+    showImage(currentIndex);
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showImage(index) {
+    if (index < 0) index = visibleImages.length - 1;
+    if (index >= visibleImages.length) index = 0;
+    currentIndex = index;
+    lbImage.src = visibleImages[index].url;
+    lbImage.alt = `تصویر یلدا ${visibleImages[index].num}`;
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  document.getElementById('lbNext').addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex + 1); });
+  document.getElementById('lbPrev').addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex - 1); });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') showImage(currentIndex - 1);
+    if (e.key === 'ArrowLeft') showImage(currentIndex + 1);
+  });
+
+  // ========== شروع ==========
+  renderGallery(allImages);
+  setInterval(updateAllBanners, 1000);
+</script>
+
+</body>
+</html>
