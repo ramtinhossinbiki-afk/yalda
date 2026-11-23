@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آهنگ‌های یلدا | موزیک یلدایی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;400;700;900&display=swap" rel="stylesheet">
+<script>
+  (function() {
+    const saved = localStorage.getItem('yalda-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
+<style>
+  :root {
+    --bg: #0b0d17;
+    --bg-deep: #05060c;
+    --glass: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-hover: rgba(255, 255, 255, 0.1);
+    --red: #e63946;
+    --red-glow: rgba(230, 57, 70, 0.4);
+    --gold: #ffd166;
+    --text: #f1faee;
+    --text-dim: rgba(241, 250, 238, 0.5);
+    --shadow-soft: rgba(0, 0, 0, 0.3);
+  }
+  [data-theme="light"] {
+    --bg: #fdf5ee;
+    --bg-deep: #f5e8db;
+    --glass: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(230, 57, 70, 0.15);
+    --glass-hover: rgba(255, 255, 255, 0.85);
+    --red: #d62839;
+    --red-glow: rgba(214, 40, 57, 0.25);
+    --gold: #c88b1a;
+    --text: #2a1a20;
+    --text-dim: rgba(42, 26, 32, 0.55);
+    --shadow-soft: rgba(120, 60, 50, 0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  /* پس‌زمینه */
+  .bg-blobs { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.35; animation: blobFloat 20s infinite ease-in-out alternate; }
+  .blob-1 { width: 500px; height: 500px; background: var(--red); top: -10%; left: -10%; animation-duration: 18s; }
+  .blob-2 { width: 400px; height: 400px; background: #5e2b97; bottom: -10%; right: -5%; animation-duration: 22s; animation-delay: -5s; }
+  [data-theme="light"] .blob-2 { background: #ffb3c1; }
+  .blob-3 { width: 300px; height: 300px; background: var(--gold); top: 40%; left: 60%; opacity: 0.15; animation-duration: 25s; animation-delay: -10s; }
+  @keyframes blobFloat { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(60px, 40px) scale(1.15); } }
+
+  /* هدر و نوار پخش */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(11, 13, 23, 0.7);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px 24px;
+    transition: background 0.5s;
+  }
+  [data-theme="light"] header { background: rgba(253, 245, 238, 0.8); }
+
+  .header-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 400;
+    transition: all 0.3s;
+  }
+  .back-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateX(4px); }
+  .back-btn svg { width: 16px; height: 16px; }
+
+  /* پلیر مینیمال در هدر */
+  .mini-player {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 8px 16px 8px 20px;
+    flex: 1;
+    max-width: 500px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mini-player-info { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .mini-player-title { font-size: 0.85rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mini-player-artist { font-size: 0.7rem; color: var(--text-dim); }
+  .mini-player-controls { display: flex; align-items: center; gap: 8px; }
+  .mini-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--red); color: #fff; border: none;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s;
+    box-shadow: 0 4px 12px var(--red-glow);
+  }
+  .mini-btn:hover { transform: scale(1.1); background: #c92a38; }
+  .mini-btn svg { width: 18px; height: 18px; }
+  .mini-btn.play-pause svg { width: 20px; height: 20px; }
+
+  /* نوار پیشرفت */
+  .progress-bar-container {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.1s linear;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* محتوای اصلی */
+  .container { position: relative; z-index: 10; max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+  .page-title { text-align: center; margin-bottom: 40px; }
+  .page-title h1 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--text) 30%, var(--gold) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .page-title p { color: var(--text-dim); font-size: 0.9rem; }
+
+  /* لیست آهنگ‌ها */
+  .song-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .song-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .song-card:hover { background: var(--glass-hover); border-color: rgba(255, 209, 102, 0.3); transform: translateY(-2px); }
+  .song-card.active { border-color: var(--gold); box-shadow: 0 4px 20px var(--red-glow); background: var(--glass-hover); }
+
+  .song-card-cover {
+    width: 56px; height: 56px; border-radius: 12px; object-fit: cover; flex-shrink: 0;
+    background: var(--bg-deep);
+  }
+  .song-card-info { flex: 1; min-width: 0; }
+  .song-card-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .song-card-artist { font-size: 0.8rem; color: var(--text-dim); }
+
+  .song-card-play {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: transparent; border: 1px solid var(--glass-border);
+    color: var(--text); display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s; flex-shrink: 0;
+  }
+  .song-card:hover .song-card-play { background: var(--red); border-color: var(--red); color: #fff; }
+  .song-card.active .song-card-play { background: var(--red); border-color: var(--red); color: #fff; }
+
+  /* قفل آهنگ‌های بیشتر */
+  .locked-songs {
+    margin-top: 40px;
+    text-align: center;
+    padding: 24px;
+    background: var(--glass);
+    border: 1px dashed var(--glass-border);
+    border-radius: 20px;
+    color: var(--text-dim);
+  }
+  .locked-songs svg { width: 32px; height: 32px; margin-bottom: 12px; opacity: 0.5; }
+  .locked-songs p { font-size: 0.9rem; line-height: 1.8; }
+
+  /* اسکرول‌بار */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  @media (max-width: 600px) {
+    .header-content { flex-direction: column; gap: 12px; }
+    .mini-player { width: 100%; max-width: none; }
+    .back-btn { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<header>
+  <div class="header-content">
+    <a href="index.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      <span>بازگشت</span>
+    </a>
+
+    <!-- پلیر مینیمال -->
+    <div class="mini-player" id="miniPlayer">
+      <div class="mini-player-info">
+        <div class="mini-player-title" id="playerTitle">آهنگ انتخاب نشده</div>
+        <div class="mini-player-artist" id="playerArtist">برای پخش کلیک کنید</div>
+      </div>
+      <div class="mini-player-controls">
+        <button class="mini-btn play-pause" id="playPauseBtn">
+          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+      </div>
+      <div class="progress-bar-container" id="progressContainer">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="page-title">
+    <h1>🎵 آهنگ‌های شب یلدا</h1>
+    <p>پلی لیست مینیمال و شیشه‌ای برای شب‌های بلند</p>
+  </div>
+
+  <div class="song-list" id="songList">
+    <!-- آهنگ‌ها توسط جاوااسکریپت پر می‌شوند -->
+  </div>
+
+  <div class="locked-songs">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    <p>بقیه آهنگ‌ها تا <strong>۷ روز</strong> مونده به یلدا قفل هستن! <br> فعلاً می‌تونی از این ۳ آهنگ لذت ببری.</p>
+  </div>
+</main>
+
+<audio id="audioPlayer"></audio>
+
+<script>
+  // ========== داده‌های ۳ آهنگ اول ==========
+  const songs = [
+    {
+      id: 1,
+      title: "شب طولانی",
+      artist: "علی مولایی",
+      src: "https://dl.musicdel.ir/Music/98/05/Music/Ali%20Molaei%20%E2%80%93%20Shabe%20Toolani%20(128).mp3",
+      cover: "https://assets.musicdel.ir/uploads/2024/12/ali_molaei_shabe_toolani-150x150.jpg"
+    },
+    {
+      id: 2,
+      title: "یلدا",
+      artist: "سینا شعبانخانی",
+      src: "https://dl.musicdel.ir/Music/1402/09/sina_shabankhani_mehro_mahtab 128.mp3",
+      cover: "https://assets.musicdel.ir/uploads/2023/12/یلدا-150x150.jpg"
+    },
+    {
+      id: 3,
+      title: "شب یلدا",
+      artist: "حامد محضرنیا",
+      src: "https://dl.musicdel.ir/Music/1400/05/hamed_mahzarnia_yalda 128.mp3",
+      cover: "https://assets.musicdel.ir/uploads/2023/12/cover-97179-150x150.jpg"
+    }
+  ];
+
+  // ========== المان‌های پلیر ==========
+  const audio = document.getElementById('audioPlayer');
+  const playerTitle = document.getElementById('playerTitle');
+  const playerArtist = document.getElementById('playerArtist');
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
+  const progressBar = document.getElementById('progressBar');
+  const progressContainer = document.getElementById('progressContainer');
+  const songList = document.getElementById('songList');
+
+  let currentSongIndex = -1;
+
+  // ========== رندر لیست آهنگ‌ها ==========
+  function renderSongs() {
+    songList.innerHTML = '';
+    songs.forEach((song, index) => {
+      const card = document.createElement('div');
+      card.className = 'song-card';
+      card.dataset.index = index;
+      card.innerHTML = `
+        <img src="${song.cover}" alt="${song.title}" class="song-card-cover" onerror="this.style.background='var(--bg-deep)'; this.src='';">
+        <div class="song-card-info">
+          <div class="song-card-title">${song.title}</div>
+          <div class="song-card-artist">${song.artist}</div>
+        </div>
+        <div class="song-card-play">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      `;
+      card.addEventListener('click', () => playSong(index));
+      songList.appendChild(card);
+    });
+  }
+
+  // ========== پخش آهنگ ==========
+  function playSong(index) {
+    if (currentSongIndex === index && !audio.paused) {
+      // اگر همان آهنگ در حال پخش است، متوقف کن
+      audio.pause();
+      return;
+    }
+
+    currentSongIndex = index;
+    const song = songs[index];
+
+    audio.src = song.src;
+    audio.play().catch(e => console.log('خطا در پخش:', e));
+
+    // به‌روزرسانی پلیر هدر
+    playerTitle.textContent = song.title;
+    playerArtist.textContent = song.artist;
+
+    // به‌روزرسانی کارت‌ها
+    updateActiveCard();
+    updatePlayPauseIcon(true);
+  }
+
+  // ========== به‌روزرسانی کارت فعال ==========
+  function updateActiveCard() {
+    document.querySelectorAll('.song-card').forEach((card, i) => {
+      if (i === currentSongIndex) {
+        card.classList.add('active');
+        // تغییر آیکون به "در حال پخش" (اکولایزر)
+        card.querySelector('.song-card-play').innerHTML = `
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+        `;
+      } else {
+        card.classList.remove('active');
+        card.querySelector('.song-card-play').innerHTML = `
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>
+        `;
+      }
+    });
+  }
+
+  // ========== آیکون پخش/توقف ==========
+  function updatePlayPauseIcon(isPlaying) {
+    if (isPlaying) {
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'block';
+    } else {
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+    }
+  }
+
+  // ========== رویدادهای پلیر ==========
+  playPauseBtn.addEventListener('click', () => {
+    if (audio.src) {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+  });
+
+  audio.addEventListener('play', () => updatePlayPauseIcon(true));
+  audio.addEventListener('pause', () => updatePlayPauseIcon(false));
+
+  // ========== نوار پیشرفت ==========
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = percent + '%';
+    }
+  });
+
+  progressContainer.addEventListener('click', (e) => {
+    if (audio.duration) {
+      const rect = progressContainer.getBoundingClientRect();
+      // چون dir=rtl است، محاسبه از راست به چپ
+      const clickX = rect.right - e.clientX;
+      const percent = clickX / rect.width;
+      audio.currentTime = percent * audio.duration;
+    }
+  });
+
+  // ========== پایان آهنگ ==========
+  audio.addEventListener('ended', () => {
+    updatePlayPauseIcon(false);
+    // پخش آهنگ بعدی اگر وجود داشت
+    if (currentSongIndex < songs.length - 1) {
+      playSong(currentSongIndex + 1);
+    } else {
+      // برگشت به اول
+      currentSongIndex = -1;
+      updateActiveCard();
+      playerTitle.textContent = 'آهنگ انتخاب نشده';
+      playerArtist.textContent = 'برای پخش کلیک کنید';
+    }
+  });
+
+  // ========== شروع ==========
+  renderSongs();
+</script>
+
+</body>
+</html>
